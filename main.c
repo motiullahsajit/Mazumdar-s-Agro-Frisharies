@@ -12,11 +12,17 @@ int authentication();
 void projectMenu();
 void addNewProject();
 void saveProjectInfo();
-void viewAllProjectInfo();
+void viewAllProjects();
 void updateProjectInfo();
 void deleteProjectInfo();
 
 // functions to manage expenses
+void expenseMenu();
+void addNewExpense();
+void saveExpenseInfo();
+void viewAllExpenses();
+void updateExpenseInfo();
+void deleteExpenseInfo();
 
 // functions to manage feeding history
 
@@ -40,7 +46,7 @@ struct Project{
 struct Expense{
     int projectId;
     float amount;
-    char date[30], type[12], productOrService[20], supplier_info[25];
+    char date[30], productOrService[20], supplierInfo[25];
 };
 
 //FeedingHistory structure
@@ -69,12 +75,13 @@ struct SellingInfo{
 FILE *fileToOperate;
 // declaring a variable to hold data of our custom data structure
 struct Project projectInfo;
+struct Expense expenseInfo;
 
 //main function of the program
 int main(){
     system("cls");
     int choice;
-    printf("\n***Mazumdar’s Agro & Frisharies***\n\n");
+    printf("\n***Mazumdar's Agro & Frisharies***\n\n");
     printf("Please Login First!!!\n   1. Enter Password\n   2. Exit\nPlease enter your choice (1/2) : ");
     login: scanf("%d", &choice);
     if(choice==1){
@@ -86,7 +93,7 @@ int main(){
             goto reauthenticate; // taking reinput for the valid password
         }
     }else if(choice==2){
-            exit(0);
+        exit(0);
     }else{
         printf("\nInvalid Choice. You should enter \"1\" for Login or \"2\" for Exit.\n\nPlease enter your choice again (1/2) : ");
         goto login;
@@ -98,7 +105,7 @@ int main(){
 // main menu of the project
 void mainMenu(){
     system("cls");
-    printf("\n\n***** Mazumdar’s Agro & Frisharies Admin Panel. *****\n\n1. Manage Projects.\n");
+    printf("\n\n***** Mazumdar's Agro & Frisharies Admin Panel. *****\n\n1. Manage Projects.\n");
     printf("2. Manage Expenses.\n3. Manage Feeding History.\n4. Manage Employee\n");
     printf("5. Manage Sells.\n6. Generate Report\n7. Price Estimation\n8. Exit\n");
     printf("\nChose the option what you want to do (1/2/3/4/5/6/7/8) : ");
@@ -109,7 +116,7 @@ void mainMenu(){
     if (userChoice==1){
         projectMenu();
     }else if(userChoice==2){
-
+        expenseMenu();
     }else if(userChoice==3){
 
     }else if(userChoice==4){
@@ -139,29 +146,32 @@ int authentication(){
     return strcmp(userPassword,fixPassword);
 }
 
+// Functions of project management starts here
 // project sub menu
 void projectMenu(){
     system("cls");
-    char menuChoice;
-    printf("\n\n\n*****Mazumdar’s Agro & Frisharies Admin Panel.*****\n");
+    printf("\n\n\n*****Mazumdar's Agro & Frisharies Admin Panel.*****\n");
     printf("A. Create New Project Info\n");
     printf("B. View all project info\n");
     printf("C. Update existing project info\n");
     printf("D. Delete a project info\n");
     printf("E. Back to Main Menu\n");
-    label4: printf("Choose the Option(A/B/C/D/E):");
+    
+    returnToProjectMenu: printf("Choose the Option(A/B/C/D/E):");
 
     //Choose User Input
     fflush(stdin);
+    char menuChoice;
     scanf("%c", &menuChoice);
     menuChoice = toupper(menuChoice);
-     switch (menuChoice)
+    
+    switch (menuChoice)
     {
     case 'A':
         addNewProject();
         break;
     case 'B':
-        viewAllProjectInfo();
+        viewAllProjects();
         break;
     case 'C':
         updateProjectInfo();
@@ -175,14 +185,14 @@ void projectMenu(){
         break;
     default:
         printf("\nInvalid Input!\nTry again!!\n");
-        goto label4;
+        goto returnToProjectMenu;
     }
 }
 
 void addNewProject(){
     system("cls");
-    struct Project pr;
-    printf("\n\n\n*****Mazumdar’s Agro & Frisharies Admin Panel.*****\n");
+    //struct Project pr;
+    printf("\n\n\n*****Mazumdar's Agro & Frisharies Admin Panel.*****\n");
 
     printf("\nProvide all necessary information about the project\n\n");
     printf("Please Enter Project Type (Fish/Poultry): ");
@@ -205,7 +215,7 @@ void addNewProject(){
     gets(projectInfo.endDate);
     printf("Please Enter the Estimated Budget: ");
     fflush(stdin);
-    scanf("%d", &projectInfo.estimatedBudget);
+    scanf("%f", &projectInfo.estimatedBudget);
 
     saveProjectInfo();
 
@@ -239,7 +249,7 @@ void saveProjectInfo()
 }
 
 // codes to show the stored projects info from file
-void viewAllProjectInfo()
+void viewAllProjects()
 {
     system("cls");
     fileToOperate = fopen("projectData.txt", "r");
@@ -303,10 +313,10 @@ void updateProjectInfo(){
             gets(projectInfo.startDate);
             printf("Please Enter Project End Date: ");
             fflush(stdin);
-             gets(projectInfo.endDate);
+            gets(projectInfo.endDate);
             printf("Please Enter the Estimated Budget: ");
             fflush(stdin);
-            scanf("%d", &projectInfo.estimatedBudget);
+            scanf("%f", &projectInfo.estimatedBudget);
             fseek(fileToOperate, -sizeof(projectInfo), SEEK_CUR);
             fwrite(&projectInfo, sizeof(struct Project), 1, fileToOperate);
             break;
@@ -393,5 +403,130 @@ void deleteProjectInfo(){
     }
 
 }
+// Functions of project management end here
 
-//gcc main.c -o main && .\main
+// Functions of expense management starts here
+
+void expenseMenu(){
+    system("cls");
+    printf("\n\n\n*****Mazumdar's Agro & Frisharies Admin Panel.*****\n");
+    printf("A. Add an Expense\n");
+    printf("B. View all Expenses\n");
+    printf("C. Update existing expense info\n");
+    printf("D. Delete a expense\n");
+    printf("E. Back to Main Menu\n");
+    
+    returnToExpenseMenu: printf("Choose the Option(A/B/C/D/E):");
+
+    //Choose User Input
+    fflush(stdin);
+    char menuChoice;
+    scanf("%c", &menuChoice);
+    menuChoice = toupper(menuChoice);
+    
+    switch (menuChoice)
+    {
+    case 'A':
+        addNewExpense();
+        break;
+    case 'B':
+        viewAllExpenses();
+        break;
+    case 'C':
+        updateProjectInfo();
+        break;
+    case 'D':
+        deleteProjectInfo();
+        break;
+    case 'E':
+        printf("\nBack Successfully\n");
+        mainMenu();
+        break;
+    default:
+        printf("\nInvalid Input!\nTry again!!\n");
+        goto returnToExpenseMenu;
+    }
+}
+
+void addNewExpense(){
+    system("cls");
+    printf("\n\n\n*****Mazumdar's Agro & Frisharies Admin Panel.*****\n");
+
+    printf("\nProvide all necessary information about the project\n\n");
+    printf("Please Enter Project ID: ");
+    fflush(stdin);
+    scanf("%d", &expenseInfo.projectId);
+    printf("Please Enter Product/Service Type: ");
+    fflush(stdin);
+    gets(expenseInfo.productOrService);
+    printf("Please Enter Supplier Info: ");
+    fflush(stdin);
+    gets(expenseInfo.supplierInfo);
+    printf("Please Enter Date: ");
+    fflush(stdin);
+    gets(expenseInfo.date);
+    printf("Please Enter the Amount: ");
+    fflush(stdin);
+    scanf("%f", &expenseInfo.amount);
+
+    saveExpenseInfo();
+
+    add_record: printf("\n\t\t\t1.Do You Want To Add Another new Project info?\n\t\t\t2.Project Menu");
+    printf("\n\t\t\tEnter Your Choose: ");
+    int choice;
+    fflush(stdin);
+    scanf("%d",&choice);
+    if(choice==1){
+        addNewExpense();
+    }else if (choice==2){
+        expenseMenu();
+    }else{
+        printf("\n\t\t\tInvalid Input! Please enter a valid choice");
+        goto add_record;
+    }
+}
+
+void saveExpenseInfo()
+{
+    fileToOperate = fopen("expenseData.txt", "a");
+    fwrite(&expenseInfo, sizeof(struct Expense), 1, fileToOperate);
+    if (fwrite != 0)
+    {
+        printf("\nSuccessfully Saved\n");
+    }
+    else
+    {
+        printf("\nSomething went wrong\n");
+    }
+    fclose(fileToOperate);
+}
+
+void viewAllExpenses()
+{
+    system("cls");
+    fileToOperate = fopen("expenseData.txt", "r");
+    printf("\n*#$All Project Information$#*\n");
+    printf(" **Project ID** \t**Project Title** \t**Start Date** \t**End Date**");
+    while (fread(&expenseInfo, sizeof(struct Expense), 1, fileToOperate))
+    {
+        printf("\n%d\t\t%s\t\t%f\t\t%s\n",expenseInfo.projectId,expenseInfo.productOrService, expenseInfo.amount,expenseInfo.date);
+    }
+    fclose(fileToOperate);
+
+    add_record2: printf("\n\t\t\t1.Expense Menu\n\t\t\t2.Main Menu\n\t\t\t3. Exit");
+    printf("\n\t\t\tEnter Your Choose: ");
+    
+    int choice;
+    scanf("%d",&choice);
+    if(choice==1){
+        expenseMenu();
+    }else if (choice==2){
+        mainMenu();
+    }else if(choice==3){
+        exit(0);
+    }
+    else{
+        printf("\n\t\t\tInvalid Input! Please enter a valid choice");
+        goto add_record2;
+    }
+}
