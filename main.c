@@ -115,6 +115,8 @@ int main(){
             goto reauthenticate; // taking reinput for the valid password
         }
     }else if(choice==2){
+        system("cls");
+        printf("\n\n\t\t***** Thank You !! *****\n\n");
         exit(0);
     }else{
         printf("\nInvalid Choice. You should enter \"1\" for Login or \"2\" for Exit.\n\nPlease enter your choice again (1/2) : ");
@@ -127,33 +129,42 @@ int main(){
 // main menu of the project
 void mainMenu(){
     system("cls");
-    printf("\n\n***** Mazumdar's Agro & Frisharies Admin Panel. *****\n\n1. Manage Projects.\n");
-    printf("2. Manage Expenses.\n3. Manage Feeding History.\n4. Manage Employee\n");
-    printf("5. Manage Sells.\n6. Generate Report\n7. Price Estimation\n8. Logout\n");
+    printf("\n\n***** Mazumdar's Agro & Frisharies Admin Panel. *****\n");
+    printf("\n\t1. Manage Projects\n\t2. Manage Expenses\n\t3. Manage Feeding History\n\t4. Manage Employee\n\t5. Manage Sells\n\t6. Generate Report\n\t7. Price Estimation\n\t8. Logout\n");
     printf("\nChose the option what you want to do (1/2/3/4/5/6/7/8) : ");
 
     int userChoice;
     redirToMainMenu: scanf("%d", &userChoice);
     
-    if (userChoice==1){
+    switch (userChoice)
+    {
+    case 1:
         projectMenu();
-    }else if(userChoice==2){
+        break;
+    case 2:
         expenseMenu();
-    }else if(userChoice==3){
+        break;
+    case 3:
         fHistoryMenu();
-    }else if(userChoice==4){
+        break;
+    case 4:
         employeeMenu();
-    }else if(userChoice==5){
+        break;
+    case 5:
         sellsMenu();
-    }else if(userChoice==6){
+        break;
+    case 6:
         generateReport();
-    }else if(userChoice==7){
+        break;
+    case 7:
         priceEstimate();
-    }else if(userChoice==8){
+        break;
+    case 8:
         system("cls");
-        printf("\n\n\t\tThank You !!");
+        printf("\n\n\t\t***** Thank You !! *****\n\n");
         exit(0);
-    }else{
+        break;
+    default:
         printf("\nInvalid input. Please enter a valid input : ");
         goto redirToMainMenu;
     }
@@ -164,7 +175,7 @@ void mainMenu(){
 int authentication(){
     char fixPassword[15]="12345";
     char userPassword[15];
-    printf("\nEnter Password :");
+    printf("\nEnter Password : ");
     fflush(stdin);
     gets(userPassword);
     return strcmp(userPassword,fixPassword);
@@ -174,14 +185,14 @@ int authentication(){
 // project sub menu
 void projectMenu(){
     system("cls");
-    printf("\n\n\n*****Mazumdar's Agro & Frisharies Admin Panel.*****\n");
+    printf("\n\n\n*****Mazumdar's Agro & Frisharies Admin Panel.*****\n\n");
     printf("A. Create New Project Info\n");
     printf("B. View all project info\n");
     printf("C. Update existing project info\n");
     printf("D. Delete a project info\n");
-    printf("E. Back to Main Menu\n");
+    printf("E. Back to Main Menu\n\n");
     
-    returnToProjectMenu: printf("Choose the Option(A/B/C/D/E):");
+    returnToProjectMenu: printf("Choose the Option(A/B/C/D/E): ");
 
     //Choose User Input
     fflush(stdin);
@@ -215,7 +226,7 @@ void projectMenu(){
 
 void addNewProject(){
     system("cls");
-    printf("\n\n\n*****Mazumdar's Agro & Frisharies Admin Panel.*****\n");
+    printf("\n\n\n*****Mazumdar's Agro & Frisharies Admin Panel.*****\n\n");
 
     printf("\nProvide all necessary information about the project\n\n");
     printf("Please Enter Project Type (Fish/Poultry): ");
@@ -227,7 +238,7 @@ void addNewProject(){
     printf("Please Enter Project Name/Title: ");
     fflush(stdin);
     gets(projectInfo.projectName);
-    printf("Please Provide Short Details About Projcet: ");
+    printf("Please Provide Short Details About Project: ");
     fflush(stdin);
     gets(projectInfo.projectShortDes);
     printf("Please Enter Project Start Date: ");
@@ -276,15 +287,15 @@ void viewAllProjects()
 {
     system("cls");
     fileToOperate = fopen("projectData.txt", "r");
-    printf("\n*#$All Project Information$#*\n");
-    printf(" **Project ID** \t**Project Title** \t**Start Date** \t**End Date**");
+    printf("\n\n\t\t\t***** All Projects List *****\n\n");
+    printf(" **Project ID** \t**Project Title** \t**Start Date** \t\t**End Date**");
     while (fread(&projectInfo, sizeof(struct Project), 1, fileToOperate))
     {
-        printf("\n%d\t\t%s\t\t%s\t\t%s\n",projectInfo.id,projectInfo.projectName, projectInfo.startDate,projectInfo.endDate);
+        printf("\n\t%d\t\t\t%s\t\t%s\t\t%s\n",projectInfo.id,projectInfo.projectName, projectInfo.startDate,projectInfo.endDate);
     }
     fclose(fileToOperate);
 
-    redirViewSub: printf("\n\t\t\t1.Project Menu\n\t\t\t2.Main Menu\n\t\t\t3.Exit");
+    redirViewSub: printf("\n\t\t\t1. Project Menu\n\t\t\t2. Main Menu\n\t\t\t3. Logout");
     printf("\n\t\t\tEnter Your Choose: ");
     
     int choice;
@@ -294,6 +305,8 @@ void viewAllProjects()
     }else if (choice==2){
         mainMenu();
     }else if(choice==3){
+        system("cls");
+        printf("\n\n\t\t***** Thank You !! *****\n\n");
         exit(0);
     }
     else{
@@ -357,7 +370,7 @@ void updateProjectInfo(){
     }
 
     
-    redirUpdateSub: printf("\n\t\t\t1.Do You Want To Modify Another  Project info?\n\t\t\t2.Project Menu\n\t\t\t3.Main Menu");
+    redirUpdateSub: printf("\n\t\t\t1. Do You Want To Modify Another Project info?\n\t\t\t2. Project Menu\n\t\t\t3. Main Menu");
     printf("\n\t\t\tEnter Your Choose: ");
     
     int choice;
@@ -376,8 +389,8 @@ void updateProjectInfo(){
 
 // deleting a project info from the file
 void deleteProjectInfo(){
-
     FILE  *removeFile;
+    
     int pId;
     printf("Enter The project id :");
     fflush(stdin);
@@ -408,7 +421,7 @@ void deleteProjectInfo(){
 
     printf("\nProject Info  Successfully Deleted\n");
 
-    redirDeleteSub: printf("\n\t\t\t1.Do You Want To delete Another  Project info?\n\t\t\t2.Project Menu\n\t\t\t3.Main Menu");
+    redirDeleteSub: printf("\n\t\t\t1. Do You Want To delete Another  Project info?\n\t\t\t2. Project Menu\n\t\t\t3. Main Menu");
     printf("\n\t\t\tEnter Your Choose: ");
     
     int choice;
@@ -433,14 +446,14 @@ void deleteProjectInfo(){
 // expense menu function
 void expenseMenu(){
     system("cls");
-    printf("\n\n\n*****Mazumdar's Agro & Frisharies Admin Panel.*****\n");
+    printf("\n\n\n*****Mazumdar's Agro & Frisharies Admin Panel.*****\n\n");
     printf("A. Add an Expense\n");
     printf("B. View all Expenses\n");
     printf("C. Update existing expense info\n");
     printf("D. Delete a expense\n");
-    printf("E. Back to Main Menu\n");
+    printf("E. Back to Main Menu\n\n");
     
-    returnToExpenseMenu: printf("Choose the Option(A/B/C/D/E):");
+    returnToExpenseMenu: printf("Choose the Option(A/B/C/D/E): ");
 
     //Choose User Input
     fflush(stdin);
@@ -475,7 +488,7 @@ void expenseMenu(){
 // add new expense info function
 void addNewExpense(){
     system("cls");
-    printf("\n\n\n*****Mazumdar's Agro & Frisharies Admin Panel.*****\n");
+    printf("\n\n\n*****Mazumdar's Agro & Frisharies Admin Panel.*****\n\n");
 
     printf("\nProvide all necessary information about the expense\n\n");
     printf("Please Enter Expense ID: ");
@@ -499,7 +512,7 @@ void addNewExpense(){
 
     saveExpenseInfo();
 
-    redirToSubMenu: printf("\n\t\t\t1.Do You Want To Add Another new Expense info?\n\t\t\t2.Expense Menu");
+    redirToSubMenu: printf("\n\t\t\t1. Do You Want To Add Another new Expense info?\n\t\t\t2. Expense Menu");
     printf("\n\t\t\tEnter Your Choose: ");
     int choice;
     fflush(stdin);
@@ -531,19 +544,20 @@ void saveExpenseInfo()
 }
 
 // view all expenses function
-void viewAllExpenses()
-{
+void viewAllExpenses(){
     system("cls");
+    
+    printf("\n\n\t\t\t***** All Expenses List *****\n\n");
+    printf(" **Expense ID** \tProject ID** \t**Product/Service** \t**Amount(BDT)** \t**Date**");
+    
     fileToOperate = fopen("expenseData.txt", "r");
-    printf("\n*#$All Project Information$#*\n");
-    printf(" **Expense ID** \tProject ID** \t**Project Title** \t**Start Date** \t**End Date**");
     while (fread(&expenseInfo, sizeof(struct Expense), 1, fileToOperate))
     {
-        printf("\n%d\t%d\t\t%s\t\t%f\t\t%s\n",expenseInfo.id,expenseInfo.projectId,expenseInfo.productOrService, expenseInfo.amount,expenseInfo.date);
+        printf("\n\n\t%d\t\t\t%d\t\t%s\t\t%.2f\t\t\t%s\n",expenseInfo.id,expenseInfo.projectId,expenseInfo.productOrService, expenseInfo.amount,expenseInfo.date);
     }
     fclose(fileToOperate);
 
-    redirToViewSub: printf("\n\t\t\t1.Expense Menu\n\t\t\t2.Main Menu\n\t\t\t3.Exit");
+    redirToViewSub: printf("\n\t\t\t1. Expense Menu\n\t\t\t2. Main Menu\n\t\t\t3. Logout");
     printf("\n\t\t\tEnter Your Choose: ");
     
     int choice;
@@ -553,6 +567,8 @@ void viewAllExpenses()
     }else if (choice==2){
         mainMenu();
     }else if(choice==3){
+        system("cls");
+        printf("\n\n\t\t***** Thank You !! *****\n\n");
         exit(0);
     }
     else{
@@ -614,7 +630,7 @@ void updateExpenseInfo(){
     }
 
     
-    redirUpdateSub: printf("\n\t\t\t1.Do You Want To Modify Another Expense info?\n\t\t\t2.Expense Menu\n\t\t\t3.Main Menu");
+    redirUpdateSub: printf("\n\t\t\t1. Do You Want To Modify Another Expense info?\n\t\t\t2. Expense Menu\n\t\t\t3. Main Menu");
     printf("\n\t\t\tEnter Your Choose: ");
     
     int choice;
@@ -633,8 +649,8 @@ void updateExpenseInfo(){
 
 // delete expense info fuction
 void deleteExpenseInfo(){
-
     FILE  *removeFile;
+    
     int pId;
     printf("Enter The Expense Id :");
     fflush(stdin);
@@ -665,7 +681,7 @@ void deleteExpenseInfo(){
     system("cls");
     printf("\nExpense Info  Successfully Deleted\n");
 
-    redirDeleteSub: printf("\n\t\t\t1.Do You Want To delete Another Expense info?\n\t\t\t2.Expense Menu\n\t\t\t3.Main Menu");
+    redirDeleteSub: printf("\n\t\t\t1. Do You Want To delete Another Expense info?\n\t\t\t2. Expense Menu\n\t\t\t3. Main Menu");
     printf("\n\t\t\tEnter Your Choose: ");
     
     int choice;
@@ -689,14 +705,14 @@ void deleteExpenseInfo(){
 // fHistory menu function
 void fHistoryMenu(){
     system("cls");
-    printf("\n\n\n*****Mazumdar's Agro & Frisharies Admin Panel.*****\n");
+    printf("\n\n\n*****Mazumdar's Agro & Frisharies Admin Panel.*****\n\n");
     printf("A. Add a Feeding History\n");
     printf("B. View all Feeding History\n");
     printf("C. Update a Feeding History info\n");
     printf("D. Delete a Feeding History\n");
-    printf("E. Back to Main Menu\n");
+    printf("E. Back to Main Menu\n\n");
     
-    returnToFHistoryMenu: printf("Choose the Option(A/B/C/D/E):");
+    returnToFHistoryMenu: printf("Choose the Option(A/B/C/D/E): ");
 
     //Choose User Input
     fflush(stdin);
@@ -731,7 +747,7 @@ void fHistoryMenu(){
 // add new fHistory info function
 void addNewFHistory(){
     system("cls");
-    printf("\n\n\n*****Mazumdar's Agro & Frisharies Admin Panel.*****\n");
+    printf("\n\n\n*****Mazumdar's Agro & Frisharies Admin Panel.*****\n\n");
 
     printf("\nProvide all necessary information about the expense\n\n");
     printf("Please Enter Feeding History ID: ");
@@ -787,19 +803,19 @@ void saveFHistoryInfo()
 }
 
 // view all expenses function
-void viewAllFHistory()
-{
+void viewAllFHistory(){
     system("cls");
+    printf("\n\n\t\t\t\t\t***** All Feeding History List *****\n\n");
+    printf(" **Feeding History ID** \tProject ID** \t**Quantity** \t**Food Category** \t**Date**");
+    
     fileToOperate = fopen("fHistoryData.txt", "r");
-    printf("\n*#$All Project Information$#*\n");
-    printf(" **Expense ID** \tProject ID** \t**Project Title** \t**Start Date** \t**End Date**");
     while (fread(&fHistoryInfo, sizeof(struct FeedingHistory), 1, fileToOperate))
     {
-        printf("\n%d\t%d\t\t%f\t\t%s\t\t%s\n",fHistoryInfo.id,fHistoryInfo.projectId,fHistoryInfo.quantity, fHistoryInfo.foodCategory,fHistoryInfo.date);
+        printf("\n\n\t%d\t\t\t%d\t\t%.2f\t\t\t%s\t\t%s\n",fHistoryInfo.id,fHistoryInfo.projectId,fHistoryInfo.quantity, fHistoryInfo.foodCategory,fHistoryInfo.date);
     }
     fclose(fileToOperate);
 
-    redirToViewSub: printf("\n\t\t\t1.Feeding History Menu\n\t\t\t2.Main Menu\n\t\t\t3.Exit");
+    redirToViewSub: printf("\n\t\t\t1. Feeding History Menu\n\t\t\t2. Main Menu\n\t\t\t3. Logout");
     printf("\n\t\t\tEnter Your Choose: ");
     
     int choice;
@@ -809,6 +825,8 @@ void viewAllFHistory()
     }else if (choice==2){
         mainMenu();
     }else if(choice==3){
+        system("cls");
+        printf("\n\n\t\t***** Thank You !! *****\n\n");
         exit(0);
     }
     else{
@@ -870,7 +888,7 @@ void updateFHistoryInfo(){
     }
 
     
-    redirUpdateSub: printf("\n\t\t\t1.Do You Want To Modify Another Feeding History info?\n\t\t\t2.Feeding History Menu\n\t\t\t3.Main Menu");
+    redirUpdateSub: printf("\n\t\t\t1. Do You Want To Modify Another Feeding History info?\n\t\t\t2. Feeding History Menu\n\t\t\t3. Main Menu");
     printf("\n\t\t\tEnter Your Choose: ");
     
     int choice;
@@ -889,8 +907,8 @@ void updateFHistoryInfo(){
 
 // delete fHistory info fuction
 void deleteFHistoryInfo(){
-
     FILE  *removeFile;
+    
     int fHId;
     printf("Enter The Feeding History Id :");
     fflush(stdin);
@@ -921,7 +939,7 @@ void deleteFHistoryInfo(){
     system("cls");
     printf("\nFeeding History Info  Successfully Deleted\n");
 
-    redirDeleteSub: printf("\n\t\t\t1.Do You Want To delete Another Feeding History info?\n\t\t\t2.Feeding History Menu\n\t\t\t3.Main Menu");
+    redirDeleteSub: printf("\n\t\t\t1. Do You Want To delete Another Feeding History info?\n\t\t\t2. Feeding History Menu\n\t\t\t3. Main Menu");
     printf("\n\t\t\tEnter Your Choose: ");
     
     int choice;
@@ -945,14 +963,14 @@ void deleteFHistoryInfo(){
 // employee menu function
 void employeeMenu(){
     system("cls");
-    printf("\n\n\n*****Mazumdar's Agro & Frisharies Admin Panel.*****\n");
+    printf("\n\n\n*****Mazumdar's Agro & Frisharies Admin Panel.*****\n\n");
     printf("A. Add A New Employee\n");
     printf("B. View all Employees\n");
     printf("C. Update An Existing Employee Info\n");
     printf("D. Delete an Employee Info\n");
-    printf("E. Back to Main Menu\n");
+    printf("E. Back to Main Menu\n\n");
     
-    returnToEmployeeMenu: printf("Choose the Option(A/B/C/D/E):");
+    returnToEmployeeMenu: printf("Choose the Option(A/B/C/D/E): ");
 
     //Choose User Input
     fflush(stdin);
@@ -987,7 +1005,7 @@ void employeeMenu(){
 // add new employee info function
 void addNewEmployee(){
     system("cls");
-    printf("\n\n\n*****Mazumdar's Agro & Frisharies Admin Panel.*****\n");
+    printf("\n\n\n*****Mazumdar's Agro & Frisharies Admin Panel.*****\n\n");
 
     printf("\nProvide all necessary information about the Employee\n\n");
     printf("Please Enter Employee ID: ");
@@ -1040,19 +1058,20 @@ void saveEmployeeInfo()
 }
 
 // view all employee function
-void viewAllEmployee()
-{
+void viewAllEmployee(){
     system("cls");
+    
+    printf("\n\n\t\t\t***** All Employee List *****\n\n");
+    printf(" **Expense ID** \t Name** \t**Phone Number** \t**Email** \t\t**Salary**");
+    
     fileToOperate = fopen("employeeData.txt", "r");
-    printf("\n*#$All Project Information$#*\n");
-    printf(" **Expense ID** \tProject ID** \t**Project Title** \t**Start Date** \t**End Date**");
     while (fread(&employeeInfo, sizeof(struct Employee), 1, fileToOperate))
     {
-        printf("\n%d\t%s\t\t0%d\t\t%s\t\t%f\n",employeeInfo.id,employeeInfo.name,employeeInfo.phoneNumber, employeeInfo.email,employeeInfo.salary);
+        printf("\n\n\t%d\t\t%s\t\t0%d\t\t%s\t\t%.2f\n",employeeInfo.id,employeeInfo.name,employeeInfo.phoneNumber, employeeInfo.email,employeeInfo.salary);
     }
     fclose(fileToOperate);
 
-    redirToViewSub: printf("\n\t\t\t1.Employee Menu\n\t\t\t2.Main Menu\n\t\t\t3.Exit");
+    redirToViewSub: printf("\n\t\t\t1. Employee Menu\n\t\t\t2. Main Menu\n\t\t\t3. Logout");
     printf("\n\t\t\tEnter Your Choose: ");
     
     int choice;
@@ -1062,6 +1081,8 @@ void viewAllEmployee()
     }else if (choice==2){
         mainMenu();
     }else if(choice==3){
+        system("cls");
+        printf("\n\n\t\t***** Thank You !! *****\n\n");
         exit(0);
     }
     else{
@@ -1120,7 +1141,7 @@ void updateEmployeeInfo(){
     }
 
     
-    redirUpdateSub: printf("\n\t\t\t1.Do You Want To Modify Another Employee info?\n\t\t\t2.Employee Menu\n\t\t\t3.Main Menu");
+    redirUpdateSub: printf("\n\t\t\t1. Do You Want To Modify Another Employee info?\n\t\t\t2. Employee Menu\n\t\t\t3. Main Menu");
     printf("\n\t\t\tEnter Your Choose: ");
     
     int choice;
@@ -1139,8 +1160,8 @@ void updateEmployeeInfo(){
 
 // delete employee info fuction
 void deleteEmployeeInfo(){
-
     FILE  *removeFile;
+    
     int eId;
     printf("Enter The Employee Id :");
     fflush(stdin);
@@ -1171,7 +1192,7 @@ void deleteEmployeeInfo(){
     system("cls");
     printf("\nEmployee Info  Successfully Deleted\n");
 
-    redirDeleteSub: printf("\n\t\t\t1.Do You Want To delete Another Employee info?\n\t\t\t2.Employee Menu\n\t\t\t3.Main Menu");
+    redirDeleteSub: printf("\n\t\t\t1. Do You Want To delete Another Employee info?\n\t\t\t2. Employee Menu\n\t\t\t3. Main Menu");
     printf("\n\t\t\tEnter Your Choose: ");
     
     int choice;
@@ -1195,14 +1216,14 @@ void deleteEmployeeInfo(){
 // sells menu function
 void sellsMenu(){
     system("cls");
-    printf("\n\n\n*****Mazumdar's Agro & Frisharies Admin Panel.*****\n");
+    printf("\n\n\n*****Mazumdar's Agro & Frisharies Admin Panel.*****\n\n");
     printf("A. Add A Selling Info\n");
     printf("B. View All Sells\n");
     printf("C. Update Existing Selling info\n");
     printf("D. Delete A Selling Info\n");
-    printf("E. Back to Main Menu\n");
+    printf("E. Back to Main Menu\n\n");
     
-    returnToSellsMenu: printf("Choose the Option(A/B/C/D/E):");
+    returnToSellsMenu: printf("Choose the Option(A/B/C/D/E): ");
 
     //Choose User Input
     fflush(stdin);
@@ -1237,7 +1258,7 @@ void sellsMenu(){
 // add new sells info function
 void addNewSells(){
     system("cls");
-    printf("\n\n\n*****Mazumdar's Agro & Frisharies Admin Panel.*****\n");
+    printf("\n\n\n*****Mazumdar's Agro & Frisharies Admin Panel.*****\n\n");
 
     printf("\nProvide all necessary information about the Sell\n\n");
     printf("Please Enter Selling Info ID: ");
@@ -1293,19 +1314,20 @@ void saveSellsInfo()
 }
 
 // view all sells function
-void viewAllSells()
-{
+void viewAllSells(){
     system("cls");
+    
+    printf("\n\n\t\t\t***** All Sells List *****\n\n");
+    printf(" **Sells ID** \tProduct** \t**Quantity** \t**Amount(BDT)** \t**Date**");
+    
     fileToOperate = fopen("sellsData.txt", "r");
-    printf("\n*#$All Project Information$#*\n");
-    printf(" **Expense ID** \tProject ID** \t**Project Title** \t**Start Date** \t**End Date**");
     while (fread(&sellsInfo, sizeof(struct SellsInfo), 1, fileToOperate))
     {
-        printf("\n%d\t%s\t\t%f\t\t%f\t\t%s\n",sellsInfo.id,sellsInfo.productName,sellsInfo.quantity, sellsInfo.amount,sellsInfo.date);
+        printf("\n\n\t%d\t%s\t\t%.2f\t\t%.2f\t\t%s\n",sellsInfo.id,sellsInfo.productName,sellsInfo.quantity, sellsInfo.amount,sellsInfo.date);
     }
     fclose(fileToOperate);
 
-    redirToViewSub: printf("\n\t\t\t1.Sells Menu\n\t\t\t2.Main Menu\n\t\t\t3.Exit");
+    redirToViewSub: printf("\n\t\t\t1. Sells Menu\n\t\t\t2. Main Menu\n\t\t\t3. Logout");
     printf("\n\t\t\tEnter Your Choose: ");
     
     int choice;
@@ -1315,6 +1337,8 @@ void viewAllSells()
     }else if (choice==2){
         mainMenu();
     }else if(choice==3){
+        system("cls");
+        printf("\n\n\t\t***** Thank You !! *****\n\n");
         exit(0);
     }
     else{
@@ -1376,7 +1400,7 @@ void updateSellsInfo(){
     }
 
     
-    redirUpdateSub: printf("\n\t\t\t1.Do You Want To Modify Another Selling Info info?\n\t\t\t2.Sells Menu\n\t\t\t3.Main Menu");
+    redirUpdateSub: printf("\n\t\t\t1. Do You Want To Modify Another Selling Info info?\n\t\t\t2. Sells Menu\n\t\t\t3. Main Menu");
     printf("\n\t\t\tEnter Your Choose: ");
     
     int choice;
@@ -1395,8 +1419,8 @@ void updateSellsInfo(){
 
 // delete sells info fuction
 void deleteSellsInfo(){
-
     FILE  *removeFile;
+    
     int sId;
     printf("Enter The Selling Info Id :");
     fflush(stdin);
@@ -1427,7 +1451,7 @@ void deleteSellsInfo(){
     system("cls");
     printf("\nSelling Info  Successfully Deleted\n");
 
-    redirDeleteSub: printf("\n\t\t\t1.Do You Want To delete Another Selling info?\n\t\t\t2.Sells Menu\n\t\t\t3.Main Menu");
+    redirDeleteSub: printf("\n\t\t\t1. Do You Want To delete Another Selling info?\n\t\t\t2. Sells Menu\n\t\t\t3. Main Menu");
     printf("\n\t\t\tEnter Your Choose: ");
     
     int choice;
@@ -1451,13 +1475,14 @@ void deleteSellsInfo(){
 
 void generateReport(){
     system("cls");
-    printf("\n Project Report\n");
 
     int pId;
     float totalExpenses =0, totalSells =0,totalFeed=0;
-    printf("Please enter project id you want to Generate Report: ");
+    printf("\n\nPlease enter project id you want to Generate Report: ");
     fflush(stdin);
     scanf("%d", &pId);
+
+    printf("\n\n\t\t\t***** Project Report *****\n\n");
     
     fileToOperate = fopen("expenseData.txt", "r");
     while (fread(&expenseInfo, sizeof(struct Expense), 1, fileToOperate))
@@ -1489,17 +1514,17 @@ void generateReport(){
     }
     fclose(fileToOperate);
 
-    printf("\n\nProject Id : %d\n", pId);
-    printf("\nProject Total Feed Give : %.2f KG\n", totalFeed);
-    printf("\nProject Total Sells : %.2f(BDT)\n", totalSells);
-    printf("\nProject Total Expenses : %.2f(BDT)\n", totalExpenses);   
+    printf("\n\tProject Id : %d\n", pId);
+    printf("\n\tProject Total Feed Give : %.2f KG\n", totalFeed);
+    printf("\n\tProject Total Sells : %.2f(BDT)\n", totalSells);
+    printf("\n\tProject Total Expenses : %.2f(BDT)\n", totalExpenses);   
     if(totalSells-totalExpenses >0){
-        printf("\nNET Profit : %.2f(BDT)\n", totalSells-totalExpenses);
+        printf("\n\tNET Profit : %.2f (BDT)\n", totalSells-totalExpenses);
     }else{
-        printf("\nNET Loss : %.2f(BDT)\n", totalExpenses-totalSells);
+        printf("\n\tNET Loss : %.2f (BDT)\n", totalExpenses-totalSells);
     }
  
-    redirReportSub: printf("\n\t\t\t1.Do You Want To Generate Report For Another Project?\n\t\t\t2.Main Menu\n\t\t\t3.Logout");
+    redirReportSub: printf("\n\t\t\t1. Do You Want To Generate Report For Another Project?\n\t\t\t2. Main Menu\n\t\t\t3. Logout");
     printf("\n\t\t\tEnter Your Choose: ");
     
     int choice;
@@ -1509,6 +1534,8 @@ void generateReport(){
     }else if (choice==2){
         mainMenu();
     }else if(choice==3){
+        system("cls");
+        printf("\n\n\t\t***** Thank You !! *****\n\n");
         exit(0);
     }else{
         printf("\n\t\t\tInvalid Input! Please enter a valid choice");
@@ -1518,18 +1545,18 @@ void generateReport(){
 
 void priceEstimate(){
     system("cls");
-    printf("\n Price Estimation\n");
 
     int pId;
     float percentage;
     char sign;
     float totalExpenses = 0,totalSells=0;
     float lossOrProfit;
-    printf("Please enter project id you want to estimate price: ");
+
+    printf("\n\nPlease enter Project Id you want to estimate price: ");
     fflush(stdin);
     scanf("%d", &pId);
 
-    printf("Please enter the percentage you to make profit(X%%): ");
+    printf("\nPlease enter the Percentage you to make profit(X%%): ");
     fflush(stdin);
     scanf("%f%c", &percentage,&sign);
     
@@ -1555,17 +1582,18 @@ void priceEstimate(){
 
     lossOrProfit = (totalExpenses + (totalExpenses*(percentage/100))) - totalSells;
     
-    printf("\n\nProject Id : %d\n", pId);
-    printf("\nProject Total Sells Till Now : %.2f(BDT)\n", totalSells);   
-    printf("\nProject Total Expenses Till Now : %.2f(BDT)\n", totalExpenses);
+    printf("\n\n\t\t\t***** Price Estimation *****\n\n");
+    printf("\n\tProject Id : %d\n", pId);
+    printf("\n\tProject Total Sells Till Now : %.2f(BDT)\n", totalSells);   
+    printf("\n\tProject Total Expenses Till Now : %.2f(BDT)\n", totalExpenses);
 
     if(lossOrProfit > 0){
-        printf("\nTo do a profit of %.2f%% you need to have more %.2f (BDT) sells from this project.\n", percentage, lossOrProfit);
+        printf("\n\tTo do a profit of %.2f%% you need to have more %.2f (BDT) sells from this project.\n", percentage, lossOrProfit);
     }else{
-        printf("\nThe Project is already in profit of %.2f (BDT)",lossOrProfit*-1);
+        printf("\n\tThe Project is already in profit of %.2f (BDT)\n\n",lossOrProfit*-1);
     }
  
-    redirReportSub: printf("\n\t\t\t1.Do You Want To Estimate Price For Another Project?\n\t\t\t2.Main Menu\n\t\t\t3.Logout");
+    redirReportSub: printf("\n\t\t\t1. Do You Want To Estimate Price For Another Project?\n\t\t\t2. Main Menu\n\t\t\t3. Logout");
     printf("\n\t\t\tEnter Your Choose: ");
     
     int choice;
@@ -1575,6 +1603,8 @@ void priceEstimate(){
     }else if (choice==2){
         mainMenu();
     }else if(choice==3){
+        system("cls");
+        printf("\n\n\t\t***** Thank You !! *****\n\n");
         exit(0);
     }else{
         printf("\n\t\t\tInvalid Input! Please enter a valid choice");
