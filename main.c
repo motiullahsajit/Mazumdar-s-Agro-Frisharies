@@ -104,15 +104,15 @@ int main(){
     system("cls");
     int choice;
     printf("\n***Mazumdar's Agro & Frisharies***\n\n");
-    printf("Please Login First!!!\n   1. Enter Password\n   2. Exit\nPlease enter your choice (1/2) : ");
+    printf("Please Login First!!!\n   1. Enter Credentials\n   2. Exit\nPlease enter your choice (1/2) : ");
     login: scanf("%d", &choice);
     if(choice==1){
         //calling the login function to check whether password is correct or not
         reauthenticate: if(authentication()==0){
             mainMenu();
         }else {
-            printf("Your password is incorrect. Please Try again.\n");
-            goto reauthenticate; // taking reinput for the valid password
+            printf("Your password or username is incorrect. Please Try again.\n");
+            goto reauthenticate; // taking re-input for the valid password
         }
     }else if(choice==2){
         system("cls");
@@ -174,11 +174,19 @@ void mainMenu(){
 // necessary codes for password protected login
 int authentication(){
     char fixPassword[15]="12345";
-    char userPassword[15];
+    char fixUsername[15]="sajit";
+    char userPassword[15],userName[15];
+    
+    printf("\nEnter Username : ");
+    fflush(stdin);
+    gets(userName);
     printf("\nEnter Password : ");
     fflush(stdin);
     gets(userPassword);
-    return strcmp(userPassword,fixPassword);
+    
+    int flag = (strcmp(userPassword, fixPassword)) && (strcmp(userName,fixUsername));
+
+    return flag;
 }
 
 // Functions of project management starts here
@@ -1282,7 +1290,7 @@ void addNewSells(){
     
     saveSellsInfo();
 
-    redirToSubMenu: printf("\n\t\t\t1.Do You Want To Add Another new Selling info?\n\t\t\t2.Sells Menu");
+    redirToSubMenu: printf("\n\t\t\t1. Do You Want To Add Another new Selling info?\n\t\t\t2. Sells Menu");
     printf("\n\t\t\tEnter Your Choose: ");
     int choice;
     fflush(stdin);
