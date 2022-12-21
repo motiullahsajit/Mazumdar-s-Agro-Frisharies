@@ -103,7 +103,7 @@ struct SellsInfo sellsInfo;
 int main(){
     system("cls");
     int choice;
-    printf("\n***Mazumdar's Agro & Frisharies***\n\n");
+    printf("\n***Mazumdar's Agro & Fisheries***\n\n");
     printf("Please Login First!!!\n   1. Enter Credentials\n   2. Exit\nPlease enter your choice (1/2) : ");
     login: scanf("%d", &choice);
     if(choice==1){
@@ -111,6 +111,7 @@ int main(){
         reauthenticate: if(authentication()==0){
             mainMenu();
         }else {
+            system("cls");
             printf("Your password or username is incorrect. Please Try again.\n");
             goto reauthenticate; // taking re-input for the valid password
         }
@@ -129,7 +130,7 @@ int main(){
 // main menu of the project
 void mainMenu(){
     system("cls");
-    printf("\n\n***** Mazumdar's Agro & Frisharies Admin Panel. *****\n");
+    printf("\n\n***** Mazumdar's Agro & Fisheries Admin Panel. *****\n");
     printf("\n\t1. Manage Projects\n\t2. Manage Expenses\n\t3. Manage Feeding History\n\t4. Manage Employee\n\t5. Manage Sells\n\t6. Generate Report\n\t7. Price Estimation\n\t8. Logout\n");
     printf("\nChose the option what you want to do (1/2/3/4/5/6/7/8) : ");
 
@@ -173,9 +174,9 @@ void mainMenu(){
 
 // necessary codes for password protected login
 int authentication(){
+    char fixUsername[15]="admin";
     char fixPassword[15]="12345";
-    char fixUsername[15]="sajit";
-    char userPassword[15],userName[15];
+    char userName[15],userPassword[15];
     
     printf("\nEnter Username : ");
     fflush(stdin);
@@ -184,16 +185,17 @@ int authentication(){
     fflush(stdin);
     gets(userPassword);
     
-    int flag = (strcmp(userPassword, fixPassword)) && (strcmp(userName,fixUsername));
+    int flag1 = (strcmp(userName,fixUsername));
+    int flag2 = (strcmp(userPassword, fixPassword));
 
-    return flag;
+    return flag1+flag2;
 }
 
 // Functions of project management starts here
 // project sub menu
 void projectMenu(){
     system("cls");
-    printf("\n\n\n*****Mazumdar's Agro & Frisharies Admin Panel.*****\n\n");
+    printf("\n\n\n*****Mazumdar's Agro & Fisheries Admin Panel.*****\n\n");
     printf("A. Create New Project Info\n");
     printf("B. View all project info\n");
     printf("C. Update existing project info\n");
@@ -234,7 +236,7 @@ void projectMenu(){
 
 void addNewProject(){
     system("cls");
-    printf("\n\n\n*****Mazumdar's Agro & Frisharies Admin Panel.*****\n\n");
+    printf("\n\n\n*****Mazumdar's Agro & Fisheries Admin Panel.*****\n\n");
 
     printf("\nProvide all necessary information about the project\n\n");
     printf("Please Enter Project Type (Fish/Poultry): ");
@@ -294,12 +296,13 @@ void saveProjectInfo()
 void viewAllProjects()
 {
     system("cls");
+    
     fileToOperate = fopen("projectData.txt", "r");
     printf("\n\n\t\t\t***** All Projects List *****\n\n");
-    printf(" **Project ID** \t**Project Title** \t**Start Date** \t\t**End Date**");
+    printf(" **Project ID** \t**Project Title**\t**Project Type** \t**Start Date** \t\t**End Date**");
     while (fread(&projectInfo, sizeof(struct Project), 1, fileToOperate))
     {
-        printf("\n\t%d\t\t\t%s\t\t%s\t\t%s\n",projectInfo.id,projectInfo.projectName, projectInfo.startDate,projectInfo.endDate);
+        printf("\n\t%d\t\t%s\t\t\t\t%s\t\t%s\t\t%s\n",projectInfo.id,projectInfo.projectName, projectInfo.projectType,projectInfo.startDate,projectInfo.endDate);
     }
     fclose(fileToOperate);
 
@@ -374,7 +377,7 @@ void updateProjectInfo(){
     }
     else
     {
-        printf("\nProject with the given IID  not found in file\n");
+        printf("\nProject with the given ID not found in file\n");
     }
 
     
@@ -454,7 +457,7 @@ void deleteProjectInfo(){
 // expense menu function
 void expenseMenu(){
     system("cls");
-    printf("\n\n\n*****Mazumdar's Agro & Frisharies Admin Panel.*****\n\n");
+    printf("\n\n\n*****Mazumdar's Agro & Fisheries Admin Panel.*****\n\n");
     printf("A. Add an Expense\n");
     printf("B. View all Expenses\n");
     printf("C. Update existing expense info\n");
@@ -496,7 +499,7 @@ void expenseMenu(){
 // add new expense info function
 void addNewExpense(){
     system("cls");
-    printf("\n\n\n*****Mazumdar's Agro & Frisharies Admin Panel.*****\n\n");
+    printf("\n\n\n*****Mazumdar's Agro & Fisheries Admin Panel.*****\n\n");
 
     printf("\nProvide all necessary information about the expense\n\n");
     printf("Please Enter Expense ID: ");
@@ -713,7 +716,7 @@ void deleteExpenseInfo(){
 // fHistory menu function
 void fHistoryMenu(){
     system("cls");
-    printf("\n\n\n*****Mazumdar's Agro & Frisharies Admin Panel.*****\n\n");
+    printf("\n\n\n*****Mazumdar's Agro & Fisheries Admin Panel.*****\n\n");
     printf("A. Add a Feeding History\n");
     printf("B. View all Feeding History\n");
     printf("C. Update a Feeding History info\n");
@@ -755,7 +758,7 @@ void fHistoryMenu(){
 // add new fHistory info function
 void addNewFHistory(){
     system("cls");
-    printf("\n\n\n*****Mazumdar's Agro & Frisharies Admin Panel.*****\n\n");
+    printf("\n\n\n*****Mazumdar's Agro & Fisheries Admin Panel.*****\n\n");
 
     printf("\nProvide all necessary information about the expense\n\n");
     printf("Please Enter Feeding History ID: ");
@@ -971,7 +974,7 @@ void deleteFHistoryInfo(){
 // employee menu function
 void employeeMenu(){
     system("cls");
-    printf("\n\n\n*****Mazumdar's Agro & Frisharies Admin Panel.*****\n\n");
+    printf("\n\n\n*****Mazumdar's Agro & Fisheries Admin Panel.*****\n\n");
     printf("A. Add A New Employee\n");
     printf("B. View all Employees\n");
     printf("C. Update An Existing Employee Info\n");
@@ -1013,7 +1016,7 @@ void employeeMenu(){
 // add new employee info function
 void addNewEmployee(){
     system("cls");
-    printf("\n\n\n*****Mazumdar's Agro & Frisharies Admin Panel.*****\n\n");
+    printf("\n\n\n*****Mazumdar's Agro & Fisheries Admin Panel.*****\n\n");
 
     printf("\nProvide all necessary information about the Employee\n\n");
     printf("Please Enter Employee ID: ");
@@ -1070,7 +1073,7 @@ void viewAllEmployee(){
     system("cls");
     
     printf("\n\n\t\t\t***** All Employee List *****\n\n");
-    printf(" **Expense ID** \t Name** \t**Phone Number** \t**Email** \t\t**Salary**");
+    printf(" **Employee ID** \t Name** \t**Phone Number** \t**Email** \t\t**Salary**");
     
     fileToOperate = fopen("employeeData.txt", "r");
     while (fread(&employeeInfo, sizeof(struct Employee), 1, fileToOperate))
@@ -1224,7 +1227,7 @@ void deleteEmployeeInfo(){
 // sells menu function
 void sellsMenu(){
     system("cls");
-    printf("\n\n\n*****Mazumdar's Agro & Frisharies Admin Panel.*****\n\n");
+    printf("\n\n\n*****Mazumdar's Agro & Fisheries Admin Panel.*****\n\n");
     printf("A. Add A Selling Info\n");
     printf("B. View All Sells\n");
     printf("C. Update Existing Selling info\n");
@@ -1266,7 +1269,7 @@ void sellsMenu(){
 // add new sells info function
 void addNewSells(){
     system("cls");
-    printf("\n\n\n*****Mazumdar's Agro & Frisharies Admin Panel.*****\n\n");
+    printf("\n\n\n*****Mazumdar's Agro & Fisheries Admin Panel.*****\n\n");
 
     printf("\nProvide all necessary information about the Sell\n\n");
     printf("Please Enter Selling Info ID: ");
@@ -1484,7 +1487,7 @@ void deleteSellsInfo(){
 void generateReport(){
     system("cls");
 
-    int pId;
+    int pId,found = 0;
     float totalExpenses =0, totalSells =0,totalFeed=0;
     printf("\n\nPlease enter project id you want to Generate Report: ");
     fflush(stdin);
@@ -1498,6 +1501,7 @@ void generateReport(){
         if (expenseInfo.projectId == pId)
         {
            totalExpenses += expenseInfo.amount;
+           found = 1;
         }
     }
     fclose(fileToOperate);
@@ -1508,6 +1512,7 @@ void generateReport(){
         if (sellsInfo.projectId == pId)
         {
            totalSells += sellsInfo.amount;
+           found = 1;
         }
     }
     fclose(fileToOperate);
@@ -1518,20 +1523,28 @@ void generateReport(){
         if (fHistoryInfo.projectId == pId)
         {
            totalFeed += fHistoryInfo.quantity;
+           found = 1;
         }
     }
     fclose(fileToOperate);
 
-    printf("\n\tProject Id : %d\n", pId);
-    printf("\n\tProject Total Feed Give : %.2f KG\n", totalFeed);
-    printf("\n\tProject Total Sells : %.2f(BDT)\n", totalSells);
-    printf("\n\tProject Total Expenses : %.2f(BDT)\n", totalExpenses);   
-    if(totalSells-totalExpenses >0){
-        printf("\n\tNET Profit : %.2f (BDT)\n", totalSells-totalExpenses);
-    }else{
-        printf("\n\tNET Loss : %.2f (BDT)\n", totalExpenses-totalSells);
+    if (found == 1)
+    {
+        printf("\n\tProject Id : %d\n", pId);
+        printf("\n\tProject Total Feed Give : %.2f KG\n", totalFeed);
+        printf("\n\tProject Total Sells : %.2f(BDT)\n", totalSells);
+        printf("\n\tProject Total Expenses : %.2f(BDT)\n", totalExpenses);   
+        if(totalSells-totalExpenses >0){
+            printf("\n\tNET Profit : %.2f (BDT)\n", totalSells-totalExpenses);
+        }else{
+            printf("\n\tNET Loss : %.2f (BDT)\n", totalExpenses-totalSells);
+        }
     }
- 
+    else
+    {
+        printf("\nProject with the given ID not found in file\n");
+    }
+
     redirReportSub: printf("\n\t\t\t1. Do You Want To Generate Report For Another Project?\n\t\t\t2. Main Menu\n\t\t\t3. Logout");
     printf("\n\t\t\tEnter Your Choose: ");
     
@@ -1554,7 +1567,7 @@ void generateReport(){
 void priceEstimate(){
     system("cls");
 
-    int pId;
+    int pId,found = 0;
     float percentage;
     char sign;
     float totalExpenses = 0,totalSells=0;
@@ -1574,6 +1587,7 @@ void priceEstimate(){
         if (expenseInfo.projectId == pId)
         {
            totalExpenses += expenseInfo.amount;
+           found = 1;
         }
     }
     fclose(fileToOperate);
@@ -1584,23 +1598,31 @@ void priceEstimate(){
         if (sellsInfo.projectId == pId)
         {
            totalSells += sellsInfo.amount;
+           found = 1;
         }
     }
     fclose(fileToOperate);
 
     lossOrProfit = (totalExpenses + (totalExpenses*(percentage/100))) - totalSells;
     
-    printf("\n\n\t\t\t***** Price Estimation *****\n\n");
-    printf("\n\tProject Id : %d\n", pId);
-    printf("\n\tProject Total Sells Till Now : %.2f(BDT)\n", totalSells);   
-    printf("\n\tProject Total Expenses Till Now : %.2f(BDT)\n", totalExpenses);
+    if (found == 1)
+    {
+        printf("\n\n\t\t\t***** Price Estimation *****\n\n");
+        printf("\n\tProject Id : %d\n", pId);
+        printf("\n\tProject Total Sells Till Now : %.2f(BDT)\n", totalSells);   
+        printf("\n\tProject Total Expenses Till Now : %.2f(BDT)\n", totalExpenses);
 
-    if(lossOrProfit > 0){
-        printf("\n\tTo do a profit of %.2f%% you need to have more %.2f (BDT) sells from this project.\n", percentage, lossOrProfit);
-    }else{
-        printf("\n\tThe Project is already in profit of %.2f (BDT)\n\n",lossOrProfit*-1);
+        if(lossOrProfit > 0){
+            printf("\n\tTo do a profit of %.2f%% you need to have more %.2f (BDT) sells from this project.\n", percentage, lossOrProfit);
+        }else{
+            printf("\n\tThe Project is already in profit of %.2f (BDT)\n\n",lossOrProfit*-1);
+        }
     }
- 
+    else
+    {
+        printf("\nProject with the given ID not found in file\n");
+    }
+
     redirReportSub: printf("\n\t\t\t1. Do You Want To Estimate Price For Another Project?\n\t\t\t2. Main Menu\n\t\t\t3. Logout");
     printf("\n\t\t\tEnter Your Choose: ");
     
